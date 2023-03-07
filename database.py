@@ -6,11 +6,10 @@ from pymongo import MongoClient, DESCENDING, ASCENDING
 
 
 # Connect to MongoDB database
-mongo = MongoClient(os.getenv("MONGODB_CONNECTION"))
-db = mongo[os.getenv("DB_NAME")]
-collection = db[os.getenv("DB_COLLECTION")]
+mongo = MongoClient(str(os.getenv("MONGODB_CONNECTION")))
+db = mongo[str(os.getenv("DB_NAME"))]
+collection = db[str(os.getenv("DB_COLLECTION"))]
 
-date = int((datetime.now() + timedelta(seconds=20)).timestamp())
 
 # Define the functions for ABM commands
 def add_item(item):

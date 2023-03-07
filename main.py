@@ -2,19 +2,14 @@ import slack
 from flask import Flask, Response
 from flask import request
 from slackeventsapi import SlackEventAdapter
- 
-from datetime import datetime, timedelta
-import time
+
 import os
 
 from database import list_items,last_order,last_id,add_item,delete_item,orderPriorityTree,checkIfAllExist,getAmount,editOrderPriorityTree
 
-SLACK_TOKEN=os.getenv("SLACK_TOKEN")
-SIGNING_SECRET=os.getenv("SIGNING_SECRET")
- 
+SLACK_TOKEN=str(os.getenv("SLACK_TOKEN"))
 app = Flask(__name__)
-slack_event_adapter = SlackEventAdapter(SIGNING_SECRET, '/slack/events', app)
- 
+
 client = slack.WebClient(token=SLACK_TOKEN)
 
 
@@ -76,7 +71,7 @@ def publish():
     stringResponse = 'Priority tree :christmas_tree:  \n'
     stack = ""
     for x in list:
-        stack =  stack + x['order'] + '. *' + x['name'].upper() + ' \n'
+        stack =  stack + x['order'] + '. *' + x['name'].upper() + '* \n'
     client.chat_postMessage(channel='sistemas',text=stringResponse + stack)
     return Response(),200
 
